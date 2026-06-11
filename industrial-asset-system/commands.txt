@@ -1,0 +1,20 @@
+
+
+uv add fastapi uvicorn pydantic
+uv add --dev pytest httpx2 ruff
+
+
+Run project:
+uv run uvicorn app.main:app --reload
+
+Run tests:
+uv run pytest -q
+
+🔨 Build image
+docker build -t asset-system .
+
+▶️ Run container
+docker run --name asset-system -p 8000:8000 asset-system
+
+▶️ Run container docker compose
+docker compose up
