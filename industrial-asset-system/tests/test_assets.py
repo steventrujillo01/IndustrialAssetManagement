@@ -121,3 +121,23 @@ def test_seed_explicitly():
     repo.seed()
     res = client.get("/assets")
     assert len(res.json()) == 3
+
+def test_update_asset():
+    created = client.post(
+        "/assets",
+        json={"name": "Pump", "location": "Plant A"}
+    ).json()
+
+    asset_id = created["id"]
+
+    res = client.patch(
+        f"/assets/{asset_id}",
+        json={"name": "Updated Pump"}
+    )
+
+    assert res.status_code == 200
+    assert res.json()["name"] == "Updated Pump"
+
+    # verify persistence
+    assets = client.get("/assets").json()
+    assert assets[0]["name"] == "Updated Pump"

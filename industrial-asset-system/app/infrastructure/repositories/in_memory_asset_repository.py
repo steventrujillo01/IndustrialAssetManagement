@@ -10,6 +10,18 @@ class InMemoryAssetRepository:
 
     def get(self, asset_id: str):
         return next((a for a in self._assets if a.id == asset_id), None)
+    
+    def update(self, asset_id: str, name: str | None = None, location: str | None = None):
+        asset = self.get(asset_id)
+        if not asset:
+            return None
+
+        if name:
+            asset.name = name
+        if location:
+            asset.location = location
+
+        return asset
 
     def delete(self, asset_id: str):
         self._assets = [a for a in self._assets if a.id != asset_id]
